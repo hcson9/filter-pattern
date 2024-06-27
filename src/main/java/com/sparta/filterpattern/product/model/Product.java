@@ -82,4 +82,14 @@ public class Product {
     this.category = category;
     this.soldYn = soldYn;
   }
+
+  public Product(Long id, String name, Double price, Category category, YN soldYn,
+      LocalDateTime createdAt) {
+    this.id = id;
+    this.name = name;
+    this.price = price;
+    this.category = category;
+    this.soldYn = soldYn;
+    this.createdAt = createdAt;
+  }
 }

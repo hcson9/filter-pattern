@@ -1,11 +1,10 @@
 package com.sparta.filterpattern.product.repository;
 
 import com.sparta.filterpattern.product.model.Product;
-import java.util.List;
-import java.util.Optional;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * create on 2024/06/13 create by IntelliJ IDEA.
+ * create on 2024/05/17 create by IntelliJ IDEA.
  *
  * <p> New Project. </p>
  *
@@ -13,9 +12,6 @@ import java.util.Optional;
  * @version 1.0
  * @since 1.0
  */
-public interface ProductRepository {
+public interface ProductJpaRepository extends JpaRepository<Product, Integer>, ProductRepository {
 
-  List<Product> findAll();
-
-  Optional<Product> findById(long id);
 }

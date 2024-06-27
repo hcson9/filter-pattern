@@ -11,4 +11,15 @@ package com.sparta.filterpattern.product.model;
  */
 public enum YN {
   Y, N;
+
+
+
+  public static YN getByString(String value) {
+    for (YN yn : YN.values()) {
+      if (yn.toString().equals(value)) {
+        return yn;
+      }
+    }
+    throw new IllegalArgumentException("yn not found");
+  }
 }

@@ -1,5 +1,20 @@
-## GET
-GET http://localhost:8080/product
+### GET
+GET http://localhost:8080/product/row-jdbc
+
+### GET
+GET http://localhost:8080/product/jpa
+
+### GET
+GET http://localhost:8080/product/jdbc-template
+
+### GET
+GET http://localhost:8080/product/row-jdbc/1
+
+### GET
+GET http://localhost:8080/product/jpa/1
+
+### GET
+GET http://localhost:8080/product/jdbc-template/1
 
 ### Get with Cookie
 GET http://localhost:8080/product

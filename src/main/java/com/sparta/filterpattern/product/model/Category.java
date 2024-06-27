@@ -13,7 +13,6 @@ import org.springframework.util.StringUtils;
  * @since 1.0
  */
 public enum Category {
-
   PANTS,
   SHIRTS,
   SOCKS,
