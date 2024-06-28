@@ -28,12 +28,6 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew clean build
 
-
-  deploy-to-ec2:
-    needs: build-and-docker-push # 위의 build-and-docker-push 이 끝나고 실행
-    runs-on: ubuntu-latest
-
-    steps:
       - name: copy to EC2
         uses: appleboy/ssh-action@v1.0.3
         with:
