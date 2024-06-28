@@ -1,6 +1,6 @@
 on:
   push:
-    branches: [ main ]
+    branches: [ gitaction2 ]
 
 env:
   DOCKER_IMAGE_TAG_NAME: filter-pattern
