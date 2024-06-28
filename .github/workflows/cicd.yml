@@ -4,9 +4,6 @@ on:
 
 env:
   DOCKER_IMAGE_TAG_NAME: filter-pattern
-  DB_URL: database-1.c5mm4oy6y3jo.ap-northeast-2.rds.amazonaws.com
-  DB_USERNAME: root
-  DB_PASSWORD: gksmftor1!
 
 jobs:
   build-and-docker-push:
@@ -66,7 +63,6 @@ jobs:
 
 
   deploy-to-ec2:
-
     needs: build-and-docker-push
     runs-on: ubuntu-latest
 
