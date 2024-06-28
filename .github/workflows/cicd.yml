@@ -76,9 +76,9 @@ jobs:
         with:
           host: 54.180.128.194
           username: ubuntu
-          key: ${{ env.EC2_SSH_KEY }}
+          key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            CONTAINER_ID=$(sudo docker ps -q --filter "publish=80-8080")
+            CONTAINER_ID=$(sudo docker ps -q --filter "publish=8080-8080")
             
             if [ ! -z "$CONTAINER_ID" ]; then
               sudo docker stop $CONTAINER_ID
