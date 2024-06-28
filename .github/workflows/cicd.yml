@@ -56,6 +56,6 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: ./docker/${{ env.DOCKER_FILE_NAME }}
+          file: ./docker/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.DOCKER_IMAGE_TAG_NAME }}:${{ github.run_number }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.DOCKER_IMAGE_TAG_NAME }}:latest
