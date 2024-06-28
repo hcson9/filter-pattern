@@ -38,4 +38,4 @@ jobs:
 
       # 이미지 푸시
       - name: Push the Docker image
-        run: docker push ${{ env.DOCKER_IMAGE_TAG_NAME }}:latest
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.DOCKER_IMAGE_TAG_NAME }}:latest
