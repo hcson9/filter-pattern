@@ -54,5 +54,8 @@ jobs:
           port: 22
           script_stop: true
           script: |
-            kill -9 $(ps -ef | grep java | head -n 1 | awk '{print $2}')
+            PID=$(pgrep -f 'java -jar')
+            if [ -n "$PID" ]; then
+              kill -9 $PID
+            fi
             nohup java -jar *.jar 1> /dev/null 2>&1 &
