@@ -1,9 +1,12 @@
 on:
   push:
-    branches: [ gitaction2 ]
+    branches: [ main ]
 
 env:
   DOCKER_IMAGE_TAG_NAME: filter-pattern
+  DB_URL: database-1.c5mm4oy6y3jo.ap-northeast-2.rds.amazonaws.com
+  DB_USERNAME: root
+  DB_PASSWORD: gksmftor1!
 
 jobs:
   build-and-docker-push:
@@ -60,3 +63,30 @@ jobs:
           file: ./docker/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.DOCKER_IMAGE_TAG_NAME }}:latest
+
+
+  deploy-to-ec2:
+
+    needs: build-and-push-docker
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: 54.180.245.219
+          username: ubuntu
+          key: ${{ env.EC2_SSH_KEY }}
+          script: |
+            CONTAINER_ID=$(sudo docker ps -q --filter "publish=80-8080")
+            
+            if [ ! -z "$CONTAINER_ID" ]; then
+              sudo docker stop $CONTAINER_ID
+              sudo docker rm $CONTAINER_ID
+            fi
+            
+            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.DOCKER_IMAGE_TAG_NAME }}:latest
+            sudo docker run ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.DOCKER_IMAGE_TAG_NAME }}:latest -d -p 8080:8080 \
+                -e DB_USERNAME=${{env.DB_USERNAME}} \
+                -e DB_PASSWORD=${{env.DB_PASSWORD}} \
+                -e DB_URL=${{env.DB_URL}}
