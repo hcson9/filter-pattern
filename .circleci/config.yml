@@ -41,12 +41,10 @@ jobs:
 
 ## Orchestrate jobs using workflows
 ## See: https://circleci.com/docs/workflows/ & https://circleci.com/docs/configuration-reference/#workflows
-#workflows:
-#  example:
-#    jobs:
-#      - build:
-#          requires:
-#            - test
-#      - deploy:
-#          requires:
-#            - test
+workflows:
+  build_and_push:
+    jobs:
+      - build
+      - docker-build-deploy:
+          requires:
+            - build
