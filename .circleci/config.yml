@@ -48,7 +48,7 @@ jobs:
       - run:
           name: Deploy Over SSH
           command: |
-            ssh -o StrictHostKeyChecking=no -i ubuntu@$SSH_HOST \
+            ssh -o StrictHostKeyChecking=no ubuntu@$SSH_HOST \
               "CONTAINER_ID=\$(sudo docker ps -q --filter 'publish=8080-8080')
 
               if [ ! -z \"\$CONTAINER_ID\" ]; then
