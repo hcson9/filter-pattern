@@ -14,3 +14,6 @@ Cookie: product=1; view=true
 ### Get with Cart Cookie
 GET http://localhost:8080/product
 Cookie: product=1; cart=ture; view=true;
+
+
+http://ec2-54-180-245-219.ap-northeast-2.compute.amazonaws.com:8080/
