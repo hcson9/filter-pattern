@@ -32,11 +32,11 @@ jobs:
       - run:
           name: Build Docker image
           command: |
-            docker build --file docker/Dockerfile --tag $DOCKERHUB_USERNAME/filter-pattern:latest .
+            docker build --file docker/Dockerfile --tag $DOCKERHUB_USERNAME/$DOCKER_IMAGE_TAG_NAME:latest .
       - run:
           name: Push Docker image
           command: |
-            docker push $DOCKERHUB_USERNAME/filter-pattern:latest
+            docker push $DOCKERHUB_USERNAME/$DOCKER_IMAGE_TAG_NAME:latest
 
   deploy:
     machine:
@@ -44,7 +44,7 @@ jobs:
     steps:
       - run:
           name: Deploy Over SSH
-          command: ssh ubuntu@$SSH_HOST "./.circleci/deploy.sh"
+          command: ssh ubuntu@$SSH_HOST ".circleci/deploy.sh"
 
 workflows:
   build_and_push:
