@@ -25,6 +25,8 @@ jobs:
       - image: cimg/base:current
     steps:
       # Replace this with steps to deploy to users
+      - setup_remote_docker:
+          version: default
       - run:
           name: Docker Login
           command: |
