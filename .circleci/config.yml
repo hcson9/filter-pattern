@@ -37,11 +37,17 @@ jobs:
           name: Push Docker image
           command: |
             docker push $DOCKERHUB_USERNAME/$DOCKER_IMAGE_TAG_NAME:latest
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
 
   deploy:
     machine:
       enabled: true
     steps:
+      - attach_workspace:
+          at: .
       - run:
           name: Deploy Over SSH
           command: ssh ubuntu@$SSH_HOST "docker/deploy.sh"
