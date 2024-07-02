@@ -12,6 +12,10 @@ jobs:
       - run:
           name: gradle 빌드
           command: ./gradlew build
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
   docker-build-deploy:
     docker:
       - image: cimg/base:current
