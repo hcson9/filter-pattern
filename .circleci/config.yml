@@ -44,7 +44,7 @@ jobs:
     steps:
       - run:
           name: Deploy Over SSH
-          command: ssh ubuntu@$SSH_HOST ".circleci/deploy.sh"
+          command: ssh ubuntu@$SSH_HOST "docker/deploy.sh"
 
 workflows:
   build_and_push:
