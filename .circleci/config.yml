@@ -22,7 +22,7 @@ jobs:
       - image: cimg/base:current
     steps:
       - attach_workspace:
-          at: .
+          at: /workspace
       - setup_remote_docker:
           version: default
       - run:
@@ -32,25 +32,24 @@ jobs:
       - run:
           name: Build Docker image
           command: |
-            docker build --file docker/Dockerfile --tag $DOCKERHUB_USERNAME/$DOCKER_IMAGE_TAG_NAME:latest .
+            docker build --file /workspace/docker/Dockerfile --tag $DOCKERHUB_USERNAME/$DOCKER_IMAGE_TAG_NAME:latest /workspace
       - run:
           name: Push Docker image
           command: |
             docker push $DOCKERHUB_USERNAME/$DOCKER_IMAGE_TAG_NAME:latest
-      - persist_to_workspace:
-          root: .
-          paths:
-            - .
 
   deploy:
-    machine:
-      enabled: true
+    docker:
+      - image: cimg/base:current
     steps:
       - attach_workspace:
-          at: .
+          at: /workspace
+      - add_ssh_keys:
+          fingerprints:
+            - "SHA256:G0hvj9P5Usfd8d8b/fnQX/082Ztd7ROIycKPv71NC6U"
       - run:
           name: Deploy Over SSH
-          command: ssh ubuntu@$SSH_HOST "docker/deploy.sh"
+          command: ssh -o StrictHostKeyChecking=no ubuntu@$SSH_HOST "bash /workspace/docker/deploy.sh"
 
 workflows:
   build_and_push:
