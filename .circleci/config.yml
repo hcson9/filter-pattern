@@ -16,6 +16,8 @@ jobs:
     docker:
       - image: cimg/base:current
     steps:
+      - attach_workspace:
+          at: .
       - setup_remote_docker:
           version: default
       - run:
