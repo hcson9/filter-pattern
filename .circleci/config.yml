@@ -49,7 +49,7 @@ jobs:
             - "SHA256:G0hvj9P5Usfd8d8b/fnQX/082Ztd7ROIycKPv71NC6U"
       - run:
           name: Deploy Over SSH
-          command: ssh -o StrictHostKeyChecking=no ubuntu@$SSH_HOST "bash docker/deploy.sh"
+          command: ssh -o StrictHostKeyChecking=no -i /path/to/your/ssh/private/key ubuntu@$SSH_HOST "echo SSH 접속 테스트 성공"
 
 workflows:
   build_and_push:
