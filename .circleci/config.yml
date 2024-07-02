@@ -26,7 +26,7 @@ jobs:
     steps:
       # Replace this with steps to deploy to users
       - setup_remote_docker:
-          version: default
+          version: 20.10.24
       - run:
           name: Docker Login
           command: |
