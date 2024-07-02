@@ -7,10 +7,10 @@ jobs:
     steps:
       - checkout
       - run:
-          name: gradlew 권한 부여
+          name: Grant execute permission to gradlew
           command: chmod +x ./gradlew
       - run:
-          name: gradle 빌드
+          name: Build with Gradle
           command: ./gradlew build
       - persist_to_workspace:
           root: .
@@ -41,6 +41,7 @@ jobs:
           root: .
           paths:
             - .
+
   deploy:
     docker:
       - image: cimg/base:current
@@ -52,20 +53,23 @@ jobs:
             - "SHA256:G0hvj9P5Usfd8d8b/fnQX/082Ztd7ROIycKPv71NC6U"
       - run:
           name: Deploy Over SSH
-          command: ssh -o StrictHostKeyChecking=no -i /path/to/your/ssh/private/key ubuntu@$SSH_HOST |
-            "CONTAINER_ID=$(sudo docker ps -q --filter "publish=8080-8080")
-  
-            if [ ! -z "$CONTAINER_ID" ]; then
-            sudo docker stop $CONTAINER_ID
-            sudo docker rm $CONTAINER_ID
-            fi
-  
-            sudo docker pull $DOCKERHUB_USERNAME/$DOCKER_IMAGE_TAG_NAME:latest
-            sudo docker run -d -p 8080:8080 \
-            -e DB_USERNAME=$DB_USERNAME \
-            -e DB_PASSWORD=$DB_PASSWORD \
-            -e DB_URL=$DB_URL
-            $DOCKERHUB_USERNAME/$DOCKER_IMAGE_TAG_NAME:latest"
+          command: |
+            ssh -o StrictHostKeyChecking=no -i /path/to/your/ssh/private/key ubuntu@$SSH_HOST \
+              "CONTAINER_ID=\$(sudo docker ps -q --filter 'publish=8080-8080')
+
+              if [ ! -z \"\$CONTAINER_ID\" ]; then
+                sudo docker stop \$CONTAINER_ID
+                sudo docker rm \$CONTAINER_ID
+              fi
+            
+              echo "$DOCKERHUB_TOKEN" | docker login -u $DOCKERHUB_USERNAME --password-stdin
+
+              sudo docker pull $DOCKERHUB_USERNAME/$DOCKER_IMAGE_TAG_NAME:latest
+              sudo docker run -d -p 8080:8080 \
+                -e DB_USERNAME=\$DB_USERNAME \
+                -e DB_PASSWORD=\$DB_PASSWORD \
+                -e DB_URL=\$DB_URL \
+                $DOCKERHUB_USERNAME/$DOCKER_IMAGE_TAG_NAME:latest"
 
 workflows:
   build_and_push:
