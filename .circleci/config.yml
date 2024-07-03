@@ -44,7 +44,7 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - "SHA256:G0hvj9P5Usfd8d8b/fnQX/082Ztd7ROIycKPv71NC6U"
+            - "본인의 fingerprint"
       - run:
           name: Deploy Over SSH
           command: |
@@ -74,6 +74,10 @@ workflows:
       - docker-build-deploy:
           requires:
             - build
+          filters:
+            branches:
+              only: main
       - deploy:
           requires:
             - docker-build-deploy
+
