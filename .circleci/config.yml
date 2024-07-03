@@ -44,7 +44,7 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - "본인의 fingerprint"
+            - "SHA256:G0hvj9P5Usfd8d8b/fnQX/082Ztd7ROIycKPv71NC6U"
       - run:
           name: Deploy Over SSH
           command: |
