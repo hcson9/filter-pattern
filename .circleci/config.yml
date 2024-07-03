@@ -80,4 +80,6 @@ workflows:
       - deploy:
           requires:
             - docker-build-deploy
-
+          filters:
+            branches:
+              only: main
