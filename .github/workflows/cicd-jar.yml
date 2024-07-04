@@ -48,8 +48,9 @@ jobs:
           script: |
             SOURCE_DIR=~/build/libs
             FILE_NAME=`find $SOURCE_DIR/*.jar -printf "%f\n"`
-            PID=`ps -ef | grep occupying | grep sudo | grep -v "bash -c" | awk '{print $2}'`
-
+            
+            PID=$(pgrep -f 'java -jar')
+            
             if [ -z "$PID" ]; then
                     echo "#### THERE IS NO PROCESS ####"
             else
@@ -62,4 +63,4 @@ jobs:
             export DB_URL=${{secrets.DB_URL}}
             export DB_USERNAME=${{secrets.DB_USERNAME}}
             export DB_PASSWORD=${{secrets.DB_PASSWORD}}
-            nohup java -jar $SOURCE_DIR/$FILE_NAME & > /dev/null 2>&1 &
+            nohup java -jar $SOURCE_DIR/$FILE_NAME & > /dev/null &
