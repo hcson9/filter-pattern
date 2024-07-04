@@ -37,7 +37,6 @@ jobs:
           port: 22
           source: "./build/libs/*.jar"
           target: "~"
-          strip_components: 2
 
       - name: SSH Commands
         uses: appleboy/ssh-action@v1.0.3
