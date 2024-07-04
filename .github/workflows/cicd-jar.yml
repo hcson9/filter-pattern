@@ -62,4 +62,4 @@ jobs:
             export DB_URL=${{secrets.DB_URL}}
             export DB_USERNAME=${{secrets.DB_USERNAME}}
             export DB_PASSWORD=${{secrets.DB_PASSWORD}}
-            nohup java -jar $SOURCE_DIR/$FILE_NAME & > /dev/null &
+            nohup java -jar $SOURCE_DIR/$FILE_NAME & > /dev/null 2>&1 &
