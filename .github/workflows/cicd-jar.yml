@@ -37,6 +37,7 @@ jobs:
           port: 22
           source: "./build/libs/*.jar"
           target: "~"
+          strip_components: 2
 
       - name: SSH Commands
         uses: appleboy/ssh-action@v1.0.3
@@ -44,16 +45,20 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_KEY }}
+          port: 22
+          script_stop: true
           script: |
-            echo "Checking for running Java processes..."
-            PID=$(pgrep -f 'java -jar')
-            if [ -n "$PID" ]; then
-              echo "Killing existing Java process with PID $PID"
-              kill -9 $PID
-              sleep 5
+            SOURCE_DIR=~/build/libs
+            FILE_NAME=`find $SOURCE_DIR/*.jar -printf "%f\n"`
+            PID=`ps -ef | grep occupying | grep sudo | grep -v "bash -c" | awk '{print $2}'`
+
+            if [ -z "$PID" ]; then
+                    echo "#### THERE IS NO PROCESS ####"
             else
-              echo "No running Java process found"
+                    echo "#### KILL $PID ####"
+                    sudo kill $PID
             fi
-            echo "Starting new Java process"
-            nohup java -jar *.jar > ~/java_app.log 2>&1 &
-            echo "Java process started"
+
+            echo "#### RUN $SOURCE_DIR/$FILE_NAME ####"
+
+            sudo java -jar $SOURCE_DIR/$FILE_NAME > /dev/null 2>&1 &
