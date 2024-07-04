@@ -39,7 +39,7 @@ jobs:
           target: "~"
 
       - name: SSH Commands
-        uses: appleboy/ssh-action@v1.0.3
+        uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
@@ -47,20 +47,22 @@ jobs:
           port: 22
           script: |
             SOURCE_DIR=~/build/libs
-            FILE_NAME=`find $SOURCE_DIR/*.jar -printf "%f\n"`
-            
-            PID=$(pgrep -f 'java -jar')
-            
+            FILE_NAME=$(basename $(find $SOURCE_DIR/*.jar))
+
+            # Explicitly kill the Java process by PID
+            PID=$(pgrep -f "java -jar $FILE_NAME")
             if [ -z "$PID" ]; then
-                    echo "#### THERE IS NO PROCESS ####"
+              echo "#### THERE IS NO PROCESS ####"
             else
-                    echo "#### KILL $PID ####"
-                    sudo kill $PID
+              echo "#### KILL $PID ####"
+              sudo kill $PID
             fi
 
             echo "#### RUN $SOURCE_DIR/$FILE_NAME ####"
-            
-            export DB_URL=${{secrets.DB_URL}}
-            export DB_USERNAME=${{secrets.DB_USERNAME}}
-            export DB_PASSWORD=${{secrets.DB_PASSWORD}}
-            nohup java -jar $SOURCE_DIR/$FILE_NAME & > /dev/null &
+
+            export DB_URL=${{ secrets.DB_URL }}
+            export DB_USERNAME=${{ secrets.DB_USERNAME }}
+            export DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+
+            # Run the JAR file with appropriate redirection
+            nohup java -jar $SOURCE_DIR/$FILE_NAME > /dev/null 2>&1 &
