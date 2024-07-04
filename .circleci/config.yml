@@ -70,13 +70,14 @@ jobs:
 workflows:
   build_and_push:
     jobs:
-      - build
+      - build:
+        filters:
+          branches:
+            only: main
       - docker-build-deploy:
           requires:
             - build
-          filters:
-            branches:
-              only: main
+
       - deploy:
           requires:
             - docker-build-deploy
