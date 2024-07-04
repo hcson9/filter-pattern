@@ -29,13 +29,13 @@ jobs:
         run: ./gradlew clean build
 
       - name: copy to EC2
-        uses: appleboy/scp-action@v0.1.7
+        uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_KEY }}
           port: 22
-          source: "build/libs/*.jar"
+          source: "./build/libs/*.jar"
           target: "~"
 
       - name: SSH Commands
