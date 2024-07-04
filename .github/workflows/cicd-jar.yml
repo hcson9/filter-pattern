@@ -37,6 +37,7 @@ jobs:
           port: 22
           source: "./build/libs/*.jar"
           target: "~"
+          rm: true
 
       - name: SSH Commands
         uses: appleboy/ssh-action@v1.0.3
@@ -63,4 +64,4 @@ jobs:
             export DB_URL=${{secrets.DB_URL}}
             export DB_USERNAME=${{secrets.DB_USERNAME}}
             export DB_PASSWORD=${{secrets.DB_PASSWORD}}
-            nohup java -jar $SOURCE_DIR/$FILE_NAME & > /dev/null
+            nohup java -jar $SOURCE_DIR/$FILE_NAME & > /dev/null &
