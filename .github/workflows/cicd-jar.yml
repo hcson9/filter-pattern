@@ -29,7 +29,7 @@ jobs:
         run: ./gradlew clean build
 
       - name: copy to EC2
-        uses: appleboy/scp-action@v1.0.3
+        uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
@@ -39,7 +39,7 @@ jobs:
           target: "~"
 
       - name: SSH Commands
-        uses: appleboy/ssh-action@v1.0.3
+        uses: appleboy/ssh-action@v1.0.6
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
