@@ -36,6 +36,7 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
+
 jar {
     enabled = false // 기본 JAR 태스크를 비활성화하여 plain JAR 파일 생성을 방지합니다.
 }
