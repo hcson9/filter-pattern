@@ -38,6 +38,7 @@ jobs:
           source: "./build/libs/*.jar"
           target: "~"
 
+
       - name: SSH Commands
         uses: appleboy/ssh-action@v1.0.3
         with:
