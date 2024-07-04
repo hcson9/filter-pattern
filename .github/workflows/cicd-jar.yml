@@ -39,7 +39,7 @@ jobs:
           target: "~"
 
       - name: SSH Commands
-        uses: appleboy/ssh-action@v1.0.6
+        uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
