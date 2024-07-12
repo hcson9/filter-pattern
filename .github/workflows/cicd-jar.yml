@@ -68,3 +68,4 @@ jobs:
 
             # Run the JAR file with appropriate redirection
             nohup java -jar $SOURCE_DIR/$FILE_NAME > /dev/null 2>&1 &
+            
